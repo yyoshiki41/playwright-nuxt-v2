@@ -3,28 +3,17 @@ name: Playwright Tests
 on:
   pull_request:
     branches:
-      - develop
-      - staging
-    paths:
-      - '**/*.vue'
-      - '**/*.ts'
-      - 'e2e/**/*'
-      - yarn.lock
-      - .github/workflows/playwright.yml
-      - '!__test__/**/*'
+      - main
 
 jobs:
   test:
     timeout-minutes: 24
-    runs-on: ubuntu-latest-32-cores
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version-file: '.node-version'
-          cache: 'yarn'
-      - name: Setup .env
-        run: cp -r .env.template .env
+          cache: "yarn"
       - run: yarn
       - run: yarn playwright install --with-deps chromium
       - name: Run Playwright tests
